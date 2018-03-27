@@ -39,6 +39,14 @@ public class Configuration {
         }
     }
 
+    public ArrayList<String> getDesiredCategories() {
+        return desiredCategories;
+    }
+
+    public ArrayList<String> getForbiddenCategories() {
+        return forbiddenCategories;
+    }
+
     public boolean isEmpty() {
         return desiredCategories.isEmpty();
     }
