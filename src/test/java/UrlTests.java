@@ -22,6 +22,21 @@ public class UrlTests{
     }
 
     @Test
+    public void defaultReachesMainSite() {
+        url = new Url("https://hijiribe.donmai.us");
+        Assert.assertEquals(url.toString(), "https://hijiribe.donmai.us");
+    }
+
+    @Test
+    public void customConfigWorksProperly() {
+        Configuration myCfg = new Configuration();
+        myCfg.addDesiredCategory("funny");
+        myCfg.addDesiredCategory("special");
+        url.setConfig(myCfg);
+        Assert.assertEquals(url.toString(), "https://hijiribe.donmai.us/posts?tags=funny+special");
+    }
+
+    @Test
     public void baseUrlIsValid() {
         Assert.assertEquals(url.toString(), "https://hijiribe.donmai.us");
     }
