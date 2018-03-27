@@ -53,15 +53,19 @@ public class Url {
 
         if (!config.isEmpty()) {
             completeUrl.append("/posts?");
-            if (pageNumber != 0) {
-                completeUrl.append("page=");
-                completeUrl.append(pageNumber);
-                completeUrl.append('&');
-            }
+            addRespectivePageNumber(completeUrl);
             addCategories(completeUrl);
         }
 
         return completeUrl.toString();
+    }
+
+    private void addRespectivePageNumber(StringBuilder completeUrl) {
+        if (pageNumber != 0) {
+            completeUrl.append("page=");
+            completeUrl.append(pageNumber);
+            completeUrl.append('&');
+        }
     }
 
     private void addCategories(StringBuilder incompleteUrl) {
