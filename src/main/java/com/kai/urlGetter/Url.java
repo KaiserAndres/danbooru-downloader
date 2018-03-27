@@ -53,6 +53,11 @@ public class Url {
 
         if (!config.isEmpty()) {
             completeUrl.append("/posts?");
+            if (pageNumber != 0) {
+                completeUrl.append("page=");
+                completeUrl.append(pageNumber);
+                completeUrl.append('&');
+            }
             addCategories(completeUrl);
         }
 

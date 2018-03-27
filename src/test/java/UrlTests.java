@@ -8,10 +8,17 @@ public class UrlTests{
 
     private Url url;
     private Configuration cfg;
+    private String tag1;
+    private String tag2;
+    private int pageNumber;
+
     @Before
     public void setUp() {
         cfg = new Configuration();
         url = new Url("https://hijiribe.donmai.us", cfg);
+        tag1 = "inubashiri_momiji";
+        tag2 = "shameimaru_aya";
+        pageNumber = 14;
     }
 
     @Test
@@ -21,10 +28,15 @@ public class UrlTests{
 
     @Test
     public void singleTagUrlIsValid() {
-        String tag = "inubashiri_momiji";
-        cfg.addDesiredCategory(tag);
+        cfg.addDesiredCategory(tag1);
         Assert.assertEquals(url.toString(), "https://hijiribe.donmai.us/posts?tags=inubashiri_momiji");
     }
 
+    @Test
+    public void urlCanUsePageNumbers() {
+        cfg.addDesiredCategory(tag1);
+        url.setPageNumber(pageNumber);
+        Assert.assertEquals(url.toString(), "https://hijiribe.donmai.us/posts?page=14&tags=inubashiri_momiji");
+    }
 
 }
