@@ -39,4 +39,19 @@ public class UrlTests{
         Assert.assertEquals(url.toString(), "https://hijiribe.donmai.us/posts?page=14&tags=inubashiri_momiji");
     }
 
+    @Test
+    public void urlCanHaveMultipleCategories() {
+        cfg.addDesiredCategory(tag2);
+        cfg.addDesiredCategory(tag1);
+        Assert.assertEquals(url.toString(), "https://hijiribe.donmai.us/posts?tags=shameimaru_aya+inubashiri_momiji");
+    }
+
+    @Test
+    public void urlCanHaveMultipleCategoriesAndAdvancedPageNumber() {
+        url.setPageNumber(2);
+        cfg.addDesiredCategory(tag2);
+        cfg.addDesiredCategory(tag1);
+        Assert.assertEquals(url.toString(), "https://hijiribe.donmai.us/posts?page=2&tags=shameimaru_aya+inubashiri_momiji");
+    }
+
 }
