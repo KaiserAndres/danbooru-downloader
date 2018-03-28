@@ -26,16 +26,8 @@ public class Url {
         this.config = config;
     }
 
-    public Configuration getConfig() {
-        return config;
-    }
-
     public void setConfig(Configuration config) {
         this.config = config;
-    }
-
-    public int getPageNumber() {
-        return pageNumber;
     }
 
     public void setPageNumber(int pageNumber) {
@@ -71,10 +63,10 @@ public class Url {
     private void addCategories(StringBuilder incompleteUrl) {
         incompleteUrl.append("tags=");
         ArrayList<String> categories = getDesiredCategories();
-        for (int i=0; i<categories.size(); i++) {
-            if (i != 0)
-                incompleteUrl.append("+");
-            incompleteUrl.append(categories.get(i));
+        for (String category: categories) {
+            if (categories.indexOf(category) != 0)
+                incompleteUrl.append('+');
+            incompleteUrl.append(category);
         }
     }
 }
