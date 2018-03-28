@@ -1,4 +1,4 @@
-package com.kai.urlGetter;
+package com.kai.danbooruManager;
 
 import java.util.ArrayList;
 

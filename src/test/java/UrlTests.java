@@ -1,5 +1,5 @@
-import com.kai.urlGetter.Configuration;
-import com.kai.urlGetter.Url;
+import com.kai.danbooruManager.Configuration;
+import com.kai.danbooruManager.Url;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
