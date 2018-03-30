@@ -40,4 +40,7 @@ public class DanbooruPage {
         }
     }
 
+    public ArrayList<Post> getPosts() {
+        return posts;
+    }
 }
