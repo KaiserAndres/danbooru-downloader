@@ -34,6 +34,10 @@ public class Url {
         this.pageNumber = pageNumber;
     }
 
+    public String getBaseUrl() {
+        return baseUrl;
+    }
+
     private ArrayList<String> getDesiredCategories() {
         return config.getDesiredCategories();
     }

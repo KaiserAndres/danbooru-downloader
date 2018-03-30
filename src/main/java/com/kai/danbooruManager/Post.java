@@ -16,14 +16,14 @@ public class Post {
     private String fileUrl;
     private String largeFileUrl;
 
-    public Post(Element element) {
+    public Post(Element element, String baseUrl) {
         Map<String, String> elementData = element.dataset();
         id = parseInt(elementData.get("id"));
         width = parseInt(elementData.get("width"));
         height = parseInt(elementData.get("height"));
         source = elementData.get("source");
-        fileUrl = elementData.get("file-url");
-        largeFileUrl = elementData.get("large-file-url");
+        fileUrl = baseUrl + elementData.get("file-url");
+        largeFileUrl = baseUrl + elementData.get("large-file-url");
         tags = elementData.get("tags").split(" ");
     }
 
@@ -38,5 +38,9 @@ public class Post {
                 ", fileUrl='" + fileUrl + '\'' +
                 ", largeFileUrl='" + largeFileUrl + '\'' +
                 '}';
+    }
+
+    public String getFileUrl() {
+        return fileUrl;
     }
 }

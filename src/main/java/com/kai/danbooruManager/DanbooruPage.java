@@ -36,7 +36,7 @@ public class DanbooruPage {
         Element body = doc.body();
         Elements detectedArticles = body.getElementsByTag("article");
         for (Element article : detectedArticles) {
-            posts.add(new Post(article));
+            posts.add(new Post(article, url.getBaseUrl()));
         }
     }
 
