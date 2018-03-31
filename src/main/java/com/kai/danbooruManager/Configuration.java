@@ -6,15 +6,26 @@ public class Configuration {
 
     private ArrayList<String> desiredCategories;
     private ArrayList<String> forbiddenCategories;
+    private String imageTarget;
 
     public Configuration() {
         desiredCategories = new ArrayList<String>();
         forbiddenCategories = new ArrayList<String>();
+        imageTarget = "./";
     }
 
     public Configuration(ArrayList<String> desiredCategories, ArrayList<String> forbiddenCategories) {
         this.desiredCategories = desiredCategories;
         this.forbiddenCategories = forbiddenCategories;
+        imageTarget = "./";
+    }
+
+    public String getImageTarget() {
+        return imageTarget;
+    }
+
+    public void setImageTarget(String imageTarget) {
+        this.imageTarget = imageTarget + "/";
     }
 
     public void addDesiredCategory(String category) {

@@ -27,7 +27,7 @@ public class DownloadManager {
     public void download() {
         Post postToDownload = postQueue.pop();
         if (cfg.validate(postToDownload)) {
-            String fileName = postToDownload.getId() + "." + postToDownload.getFileExtention();
+            String fileName = cfg.getImageTarget() + postToDownload.getId() + "." + postToDownload.getFileExtention();
             File savedImage = new File(fileName);
             try {
                 FileUtils.copyURLToFile(postToDownload.getFileUrl(), savedImage);
