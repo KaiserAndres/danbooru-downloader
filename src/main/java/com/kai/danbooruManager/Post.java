@@ -2,6 +2,8 @@ package com.kai.danbooruManager;
 
 import org.jsoup.nodes.Element;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Map;
 import static java.lang.Integer.parseInt;
@@ -10,21 +12,30 @@ public class Post {
 
     private int id;
     private String[] tags;
+    private String fileExtention;
     private int width;
     private int height;
-    private String source;
-    private String fileUrl;
-    private String largeFileUrl;
+    private URL source;
+    private URL fileUrl;
+    private URL largeFileUrl;
+
 
     public Post(Element element, String baseUrl) {
         Map<String, String> elementData = element.dataset();
         id = parseInt(elementData.get("id"));
         width = parseInt(elementData.get("width"));
         height = parseInt(elementData.get("height"));
-        source = elementData.get("source");
-        fileUrl = baseUrl + elementData.get("file-url");
-        largeFileUrl = baseUrl + elementData.get("large-file-url");
+        try {
+            source = new URL(elementData.get("source"));
+            fileUrl = new URL(baseUrl + elementData.get("file-url"));
+            largeFileUrl = new URL(baseUrl + elementData.get("large-file-url"));
+        } catch (MalformedURLException e) {
+            source = null;
+            fileUrl = null;
+            largeFileUrl = null;
+        }
         tags = elementData.get("tags").split(" ");
+        fileExtention = elementData.get("file-ext");
     }
 
     @Override
@@ -40,8 +51,16 @@ public class Post {
                 '}';
     }
 
-    public String getFileUrl() {
+    public URL getFileUrl() {
         return fileUrl;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getFileExtention() {
+        return fileExtention;
     }
 
     public String[] getTags() {

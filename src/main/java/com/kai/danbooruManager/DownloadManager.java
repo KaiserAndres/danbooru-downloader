@@ -1,7 +1,10 @@
 package com.kai.danbooruManager;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import org.apache.commons.io.FileUtils;
 
 public class DownloadManager {
 
@@ -23,8 +26,15 @@ public class DownloadManager {
 
     public void download() {
         Post postToDownload = postQueue.pop();
-        if (cfg.validate(postToDownload))
-            System.out.println(postToDownload.getFileUrl());
+        if (cfg.validate(postToDownload)) {
+            String fileName = postToDownload.getId() + "." + postToDownload.getFileExtention();
+            File savedImage = new File(fileName);
+            try {
+                FileUtils.copyURLToFile(postToDownload.getFileUrl(), savedImage);
+            } catch (IOException e) {
+                postQueue.add(postToDownload);
+            }
+        }
     }
 
     public boolean isEmpty() {
