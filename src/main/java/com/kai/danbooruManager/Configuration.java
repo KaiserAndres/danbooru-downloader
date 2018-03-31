@@ -50,4 +50,12 @@ public class Configuration {
     public boolean isEmpty() {
         return desiredCategories.isEmpty();
     }
+
+    public boolean validate(Post p) {
+        boolean res = true;
+        for (String category : p.getTags()) {
+            res = res && !forbiddenCategories.contains(category);
+        }
+        return res;
+    }
 }

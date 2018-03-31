@@ -43,4 +43,8 @@ public class Post {
     public String getFileUrl() {
         return fileUrl;
     }
+
+    public String[] getTags() {
+        return tags;
+    }
 }
