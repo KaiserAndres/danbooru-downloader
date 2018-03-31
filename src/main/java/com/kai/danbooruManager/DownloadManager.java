@@ -16,10 +16,6 @@ public class DownloadManager {
         postQueue = new ArrayDeque<Post>();
     }
 
-    public void addPost(Post p) {
-        postQueue.add(p);
-    }
-
     public void addPosts(ArrayList<Post> posts) {
         postQueue.addAll(posts);
     }
@@ -29,10 +25,12 @@ public class DownloadManager {
         if (cfg.validate(postToDownload)) {
             String fileName = cfg.getImageTarget() + postToDownload.getId() + "." + postToDownload.getFileExtention();
             File savedImage = new File(fileName);
-            try {
-                FileUtils.copyURLToFile(postToDownload.getFileUrl(), savedImage);
-            } catch (IOException e) {
-                postQueue.add(postToDownload);
+            if (!savedImage.exists()) {
+                try {
+                    FileUtils.copyURLToFile(postToDownload.getFileUrl(), savedImage);
+                } catch (IOException e) {
+                    postQueue.add(postToDownload);
+                }
             }
         }
     }
