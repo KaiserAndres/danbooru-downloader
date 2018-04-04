@@ -1,12 +1,21 @@
 package com.kai.booter;
 
-import org.apache.commons.cli.Option;
-import org.apache.commons.cli.Options;
+import org.apache.commons.cli.*;
+
+import java.util.Iterator;
 
 public class Main {
 
     public static void main(String[] args) {
         Options cliOptions = getOptions();
+        CommandLineParser parser = new DefaultParser();
+        CommandLine commandLine;
+        try {
+            commandLine = parser.parse(cliOptions, args);
+        } catch (ParseException e) {
+            System.out.println("Make it load the GUI, seriously I'll do it some day. :(");
+            return;
+        }
     }
 
     private static Options getOptions() {
@@ -30,7 +39,7 @@ public class Main {
                 .longOpt("page-number")
                 .argName("Number of pages")
                 .desc("The amount of pages to be downloaded")
-                .type(Integer.class)
+                .hasArg()
                 .required()
                 .build();
 
