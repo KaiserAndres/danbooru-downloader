@@ -29,6 +29,7 @@ public class DownloadManager {
                 try {
                     FileUtils.copyURLToFile(postToDownload.getFileUrl(), savedImage);
                 } catch (IOException e) {
+                    System.out.println(e.toString());
                     postQueue.add(postToDownload);
                 }
             }

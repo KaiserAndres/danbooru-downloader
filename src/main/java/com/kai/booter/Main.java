@@ -1,6 +1,9 @@
 package com.kai.booter;
 
 import com.kai.danbooruManager.Configuration;
+import com.kai.danbooruManager.DanbooruPage;
+import com.kai.danbooruManager.DownloadManager;
+import com.kai.danbooruManager.Url;
 import org.apache.commons.cli.*;
 
 public class Main {
@@ -17,6 +20,44 @@ public class Main {
         }
 
         Configuration userCfg = createConfiguration(commandLine);
+        Url workerUrl = createWorkerUrl(commandLine, userCfg);
+
+        int pageCount = Integer.parseInt(commandLine.getOptionValue('n'));
+
+        DownloadManager dm = new DownloadManager(userCfg);
+
+        for (int p=0; p<pageCount; p++) {
+            System.out.println("Downloading page Nº" + workerUrl.getPageNumber());
+            DanbooruPage page = new DanbooruPage(workerUrl);
+            page.downloadPage();
+            page.populatePosts();
+
+            dm.addPosts(page.getPosts());
+
+            while (!dm.isEmpty())
+                dm.download();
+
+            workerUrl.incrementPageNumber();
+        }
+
+    }
+
+    private static Url createWorkerUrl(CommandLine commandLine, Configuration userCfg) {
+        Url workerUrl = new Url();
+
+        if (commandLine.hasOption('b'))
+            workerUrl.setBaseUrl(commandLine.getOptionValue('b'));
+        else
+            workerUrl.setBaseUrl("https://hijiribe.donmai.us");
+
+        if (commandLine.hasOption('p'))
+            workerUrl.setPageNumber(Integer.parseInt(commandLine.getOptionValue('p')));
+        else
+            workerUrl.setPageNumber(1);
+
+        workerUrl.setConfig(userCfg);
+
+        return workerUrl;
     }
 
     private static Configuration createConfiguration(CommandLine commandLine) {

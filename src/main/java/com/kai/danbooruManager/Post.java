@@ -27,8 +27,15 @@ public class Post {
         height = parseInt(elementData.get("height"));
         try {
             source = new URL(elementData.get("source"));
-            fileUrl = new URL(baseUrl + elementData.get("file-url"));
-            largeFileUrl = new URL(baseUrl + elementData.get("large-file-url"));
+            if (elementData.get("file-url").contains("http"))
+                    fileUrl = new URL(elementData.get("file-url"));
+            else
+                fileUrl = new URL(baseUrl + elementData.get("file-url"));
+
+            if (elementData.get("large-file-url").contains("http"))
+                largeFileUrl = new URL(elementData.get("large-file-url"));
+            else
+                largeFileUrl = new URL(baseUrl + elementData.get("large-file-url"));
         } catch (MalformedURLException e) {
             source = null;
             fileUrl = null;

@@ -8,6 +8,12 @@ public class Url {
     private int pageNumber;
     private Configuration config;
 
+    public Url() {
+        baseUrl = "";
+        pageNumber = 1;
+        config = null;
+    }
+
     public Url(String baseUrl, int pageNumber, Configuration config) {
         this.baseUrl = baseUrl;
         this.pageNumber = pageNumber;
@@ -26,12 +32,22 @@ public class Url {
         this.config = config;
     }
 
+    public int getPageNumber() {
+        return pageNumber;
+    }
+
+    public void incrementPageNumber() { pageNumber++; }
+
     public void setConfig(Configuration config) {
         this.config = config;
     }
 
     public void setPageNumber(int pageNumber) {
         this.pageNumber = pageNumber;
+    }
+
+    public void setBaseUrl(String baseUrl) {
+        this.baseUrl = baseUrl;
     }
 
     public String getBaseUrl() {
