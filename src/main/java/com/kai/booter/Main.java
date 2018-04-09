@@ -1,8 +1,7 @@
 package com.kai.booter;
 
+import com.kai.danbooruManager.Configuration;
 import org.apache.commons.cli.*;
-
-import java.util.Iterator;
 
 public class Main {
 
@@ -16,6 +15,26 @@ public class Main {
             System.out.println("Make it load the GUI, seriously I'll do it some day. :(");
             return;
         }
+
+        Configuration userCfg = createConfiguration(commandLine);
+    }
+
+    private static Configuration createConfiguration(CommandLine commandLine) {
+        Configuration userCfg = new Configuration();
+
+        for (String category : commandLine.getOptionValue('d').split(" ")) {
+            userCfg.addDesiredCategory(category);
+        }
+
+        if (commandLine.hasOption('f')) {
+            for (String category : commandLine.getOptionValue('f').split(" ")) {
+                userCfg.addForbiddenCategory(category);
+            }
+        }
+
+        userCfg.setImageTarget(commandLine.getOptionValue('t'));
+
+        return userCfg;
     }
 
     private static Options getOptions() {
