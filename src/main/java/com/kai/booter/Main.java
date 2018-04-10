@@ -26,13 +26,17 @@ public class Main {
                 return;
             }
 
-            if (commandLine.hasOption("h")) {
-                displayHelp(cliOptions);
-                return;
-            }
-
         } catch (ParseException e) {
-            displayHelp(cliOptions);
+
+            if (Arrays.asList(args).contains("-h") || Arrays.asList(args).contains("--help"))
+                displayHelp(cliOptions);
+
+            else if (Arrays.asList(args).contains("-v") || Arrays.asList(args).contains("--version"))
+                System.out.println(programName + " v" + versionNumber);
+
+            else
+                displayHelp(cliOptions);
+
             return;
         }
 
