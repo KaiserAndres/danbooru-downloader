@@ -20,17 +20,18 @@ public class Main {
         CommandLine commandLine;
         try {
             commandLine = parser.parse(cliOptions, args);
+
+            if (commandLine.hasOption("v")) {
+                System.out.println(programName + " v" + versionNumber);
+                return;
+            }
+
+            if (commandLine.hasOption("h")) {
+                displayHelp(cliOptions);
+                return;
+            }
+
         } catch (ParseException e) {
-            displayHelp(cliOptions);
-            return;
-        }
-
-        if (commandLine.hasOption("v")) {
-            System.out.println(programName + " v" + versionNumber);
-            return;
-        }
-
-        if (commandLine.hasOption("h")) {
             displayHelp(cliOptions);
             return;
         }
