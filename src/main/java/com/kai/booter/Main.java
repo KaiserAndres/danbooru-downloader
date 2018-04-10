@@ -20,12 +20,6 @@ public class Main {
         CommandLine commandLine;
         try {
             commandLine = parser.parse(cliOptions, args);
-
-            if (commandLine.hasOption("v")) {
-                System.out.println(programName + " v" + versionNumber);
-                return;
-            }
-
         } catch (ParseException e) {
 
             if (Arrays.asList(args).contains("-h") || Arrays.asList(args).contains("--help"))
@@ -58,10 +52,12 @@ public class Main {
 
             downloadManager.addPosts(page.getPosts());
             int totalPosts = downloadManager.getPostCount();
+            int downloaded = 1;
 
             while (downloadManager.hasElements()) {
                 downloadManager.download();
-                System.out.println(p+1 + "/" + totalPosts);
+                System.out.println(downloaded + "/" + totalPosts);
+                downloaded++;
             }
 
             workerUrl.incrementPageNumber();
@@ -96,12 +92,12 @@ public class Main {
     private static Configuration createConfiguration(CommandLine commandLine) {
         Configuration userCfg = new Configuration();
 
-        for (String category : commandLine.getOptionValue('d').split(" ")) {
+        for (String category : commandLine.getOptionValues('d')) {
             userCfg.addDesiredCategory(category);
         }
 
         if (commandLine.hasOption('f')) {
-            for (String category : commandLine.getOptionValue('f').split(" ")) {
+            for (String category : commandLine.getOptionValues('f')) {
                 userCfg.addForbiddenCategory(category);
             }
         }
@@ -109,7 +105,7 @@ public class Main {
         if (commandLine.hasOption("sfw")) {
             userCfg.addForbiddenCategories(
                 Arrays.asList("nude", "sex", "nipples", "penis", "pussy", "underwear", "topless", "gore",
-                        "panties")
+                        "panties", "cum", "naked apron", "ass", "no panties", "micro bikini")
             );
         }
 
