@@ -17,7 +17,9 @@ public class Main {
         try {
             commandLine = parser.parse(cliOptions, args);
         } catch (ParseException e) {
-            System.out.println("Make it load the GUI, seriously I'll do it some day. :(");
+            String header = "Make it load the GUI, seriously I'll do it some day. :(";
+            HelpFormatter hp = new HelpFormatter();
+            hp.printHelp("Danbooru-downloader", header, cliOptions, "", true);
             return;
         }
 
