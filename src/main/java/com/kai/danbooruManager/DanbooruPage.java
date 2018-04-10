@@ -7,6 +7,7 @@ import org.jsoup.select.Elements;
 
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -36,7 +37,11 @@ public class DanbooruPage {
         Element body = doc.body();
         Elements detectedArticles = body.getElementsByTag("article");
         for (Element article : detectedArticles) {
-            posts.add(new Post(article, url.getBaseUrl()));
+            try {
+                posts.add(new Post(article, url.getBaseUrl()));
+            } catch (MalformedURLException e) {
+                System.out.println(e.toString());
+            }
         }
     }
 

@@ -5,6 +5,8 @@ import com.kai.danbooruManager.DanbooruPage;
 import com.kai.danbooruManager.DownloadManager;
 import com.kai.danbooruManager.Url;
 import org.apache.commons.cli.*;
+import java.util.Arrays;
+
 
 public class Main {
 
@@ -73,6 +75,13 @@ public class Main {
             }
         }
 
+        if (commandLine.hasOption("sfw")) {
+            userCfg.addForbiddenCategories(
+                Arrays.asList("nude", "sex", "nipples", "penis", "pussy", "underwear", "topless", "gore",
+                        "panties")
+            );
+        }
+
         userCfg.setImageTarget(commandLine.getOptionValue('t'));
 
         return userCfg;
@@ -92,7 +101,7 @@ public class Main {
                 .argName("Page start")
                 .desc("The page in which the downloading starts. If unspecified 1 will be used.")
                 .required(false)
-                .type(Integer.class)
+                .hasArg()
                 .build();
 
         Option numberOfPages = Option.builder("n")
@@ -119,6 +128,14 @@ public class Main {
                 .hasArgs()
                 .build();
 
+        Option sfw =Option.builder()
+                .longOpt("sfw")
+                .argName("Safe for work")
+                .required(false)
+                .hasArg(false)
+                .desc("Block out all non-SWF material")
+                .build();
+
         Option directory = Option.builder("t")
                 .longOpt("target")
                 .argName("Target directory")
@@ -133,6 +150,7 @@ public class Main {
         cliOptions.addOption(numberOfPages);
         cliOptions.addOption(desiredTags);
         cliOptions.addOption(forbiddenTags);
+        cliOptions.addOption(sfw);
         cliOptions.addOption(directory);
 
         return cliOptions;

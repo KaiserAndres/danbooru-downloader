@@ -1,6 +1,7 @@
 package com.kai.danbooruManager;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class Configuration {
 
@@ -42,6 +43,8 @@ public class Configuration {
     public void addForbiddenCategory(String category) {
         forbiddenCategories.add(category);
     }
+
+    public void addForbiddenCategories(Collection<String> categories) { forbiddenCategories.addAll(categories); }
 
     public void removeForbiddenCategory(String oldCategory) {
         for (String category : desiredCategories) {

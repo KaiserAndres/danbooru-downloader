@@ -20,7 +20,7 @@ public class Post {
     private URL largeFileUrl;
 
 
-    public Post(Element element, String baseUrl) {
+    public Post(Element element, String baseUrl) throws MalformedURLException{
         Map<String, String> elementData = element.dataset();
         id = parseInt(elementData.get("id"));
         width = parseInt(elementData.get("width"));
@@ -40,6 +40,7 @@ public class Post {
             source = null;
             fileUrl = null;
             largeFileUrl = null;
+            throw e;
         }
         tags = elementData.get("tags").split(" ");
         fileExtention = elementData.get("file-ext");
