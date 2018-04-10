@@ -43,16 +43,25 @@ public class Main {
 
         DownloadManager dm = new DownloadManager(userCfg);
 
-        for (int p=0; p<pageCount; p++) {
+        downloadPictures(workerUrl, pageCount, dm);
+
+    }
+
+    private static void downloadPictures(Url workerUrl, int pageAmount, DownloadManager downloadManager) {
+
+        for (int p = 0; p< pageAmount; p++) {
             System.out.println("Downloading page Nº" + workerUrl.getPageNumber());
             DanbooruPage page = new DanbooruPage(workerUrl);
             page.downloadPage();
             page.populatePosts();
 
-            dm.addPosts(page.getPosts());
+            downloadManager.addPosts(page.getPosts());
+            int totalPosts = downloadManager.getPostCount();
 
-            while (!dm.isEmpty())
-                dm.download();
+            while (!downloadManager.isEmpty()) {
+                downloadManager.download();
+                System.out.println(p+1 + "/" + totalPosts);
+            }
 
             workerUrl.incrementPageNumber();
         }
