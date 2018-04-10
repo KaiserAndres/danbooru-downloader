@@ -25,7 +25,7 @@ public class DanbooruPage {
         this.doc = null;
     }
 
-    public void downloadPage() {
+    private void downloadPage() {
         try {
             doc = Jsoup.connect(url.toString()).get();
         } catch (IOException e) {
@@ -33,7 +33,7 @@ public class DanbooruPage {
         }
     }
 
-    public void populatePosts() {
+    private void populatePosts() {
         Element body = doc.body();
         Elements detectedArticles = body.getElementsByTag("article");
         for (Element article : detectedArticles) {
@@ -43,6 +43,11 @@ public class DanbooruPage {
                 pageLogger.severe("Unable to download image: " + e.toString());
             }
         }
+    }
+
+    public void processPage() {
+        downloadPage();
+        populatePosts();
     }
 
     public ArrayList<Post> getPosts() {

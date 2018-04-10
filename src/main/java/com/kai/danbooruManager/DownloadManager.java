@@ -38,7 +38,7 @@ public class DownloadManager {
 
     public int getPostCount() { return  postQueue.size(); }
 
-    public boolean isEmpty() {
-        return postQueue.isEmpty();
+    public boolean hasElements() {
+        return !postQueue.isEmpty();
     }
 }

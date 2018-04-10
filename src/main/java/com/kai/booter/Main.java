@@ -15,7 +15,6 @@ public class Main {
         String programName = "Danbooru downloader";
         String versionNumber = "1.1";
 
-
         Options cliOptions = CLIOptionCreator.getOptions();
         CommandLineParser parser = new DefaultParser();
         CommandLine commandLine;
@@ -38,11 +37,9 @@ public class Main {
 
         Configuration userCfg = createConfiguration(commandLine);
         Url workerUrl = createWorkerUrl(commandLine, userCfg);
-
         int pageCount = Integer.parseInt(commandLine.getOptionValue('n'));
 
         DownloadManager dm = new DownloadManager(userCfg);
-
         downloadPictures(workerUrl, pageCount, dm);
 
     }
@@ -52,13 +49,12 @@ public class Main {
         for (int p = 0; p< pageAmount; p++) {
             System.out.println("Downloading page Nº" + workerUrl.getPageNumber());
             DanbooruPage page = new DanbooruPage(workerUrl);
-            page.downloadPage();
-            page.populatePosts();
+            page.processPage();
 
             downloadManager.addPosts(page.getPosts());
             int totalPosts = downloadManager.getPostCount();
 
-            while (!downloadManager.isEmpty()) {
+            while (downloadManager.hasElements()) {
                 downloadManager.download();
                 System.out.println(p+1 + "/" + totalPosts);
             }
