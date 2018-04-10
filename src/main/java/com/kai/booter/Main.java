@@ -11,15 +11,28 @@ import java.util.Arrays;
 public class Main {
 
     public static void main(String[] args) {
+
+        String programName = "Danbooru downloader";
+        String versionNumber = "1.1";
+
+
         Options cliOptions = getOptions();
         CommandLineParser parser = new DefaultParser();
         CommandLine commandLine;
         try {
             commandLine = parser.parse(cliOptions, args);
         } catch (ParseException e) {
-            String header = "Make it load the GUI, seriously I'll do it some day. :(";
-            HelpFormatter hp = new HelpFormatter();
-            hp.printHelp("Danbooru-downloader", header, cliOptions, "", true);
+            displayHelp(cliOptions);
+            return;
+        }
+
+        if (commandLine.hasOption("v")) {
+            System.out.println(programName + " v" + versionNumber);
+            return;
+        }
+
+        if (commandLine.hasOption("h")) {
+            displayHelp(cliOptions);
             return;
         }
 
@@ -44,6 +57,12 @@ public class Main {
             workerUrl.incrementPageNumber();
         }
 
+    }
+
+    private static void displayHelp(Options cliOptions) {
+        String header = "I'll it load the GUI, seriously I'll do it some day. :(";
+        HelpFormatter hp = new HelpFormatter();
+        hp.printHelp("Danbooru-downloader", header, cliOptions, "", true);
     }
 
     private static Url createWorkerUrl(CommandLine commandLine, Configuration userCfg) {
@@ -82,6 +101,10 @@ public class Main {
                 Arrays.asList("nude", "sex", "nipples", "penis", "pussy", "underwear", "topless", "gore",
                         "panties")
             );
+        }
+
+        if (commandLine.hasOption("no-comic")) {
+            userCfg.addForbiddenCategory("comic");
         }
 
         userCfg.setImageTarget(commandLine.getOptionValue('t'));
@@ -130,12 +153,20 @@ public class Main {
                 .hasArgs()
                 .build();
 
-        Option sfw =Option.builder()
+        Option sfw = Option.builder()
                 .longOpt("sfw")
                 .argName("Safe for work")
                 .required(false)
                 .hasArg(false)
                 .desc("Block out all non-SWF material")
+                .build();
+
+        Option noComic = Option.builder()
+                .longOpt("no-comic")
+                .argName("No comics")
+                .required(false)
+                .hasArg(false)
+                .desc("Block out all comic/manga images.")
                 .build();
 
         Option directory = Option.builder("t")
@@ -146,7 +177,20 @@ public class Main {
                 .hasArg()
                 .build();
 
+        Option help = Option.builder("h")
+                .longOpt("help")
+                .desc("This message.")
+                .required(false)
+                .build();
+
+        Option version = Option.builder("v")
+                .longOpt("version")
+                .desc("Version number.")
+                .required(false)
+                .build();
+
         Options cliOptions = new Options();
+
         cliOptions.addOption(site);
         cliOptions.addOption(pageStart);
         cliOptions.addOption(numberOfPages);
@@ -154,6 +198,9 @@ public class Main {
         cliOptions.addOption(forbiddenTags);
         cliOptions.addOption(sfw);
         cliOptions.addOption(directory);
+        cliOptions.addOption(help);
+        cliOptions.addOption(version);
+        cliOptions.addOption(noComic);
 
         return cliOptions;
     }

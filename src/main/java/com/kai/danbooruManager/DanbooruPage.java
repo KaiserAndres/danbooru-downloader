@@ -40,7 +40,7 @@ public class DanbooruPage {
             try {
                 posts.add(new Post(article, url.getBaseUrl()));
             } catch (MalformedURLException e) {
-                System.out.println(e.toString());
+                pageLogger.severe("Unable to download image: " + e.toString());
             }
         }
     }
