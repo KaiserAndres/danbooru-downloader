@@ -16,7 +16,7 @@ public class Main {
         String versionNumber = "1.1";
 
 
-        Options cliOptions = getOptions();
+        Options cliOptions = CLIOptionCreator.getOptions();
         CommandLineParser parser = new DefaultParser();
         CommandLine commandLine;
         try {
@@ -110,99 +110,6 @@ public class Main {
         userCfg.setImageTarget(commandLine.getOptionValue('t'));
 
         return userCfg;
-    }
-
-    private static Options getOptions() {
-        Option site = Option.builder("b")
-                .longOpt("base-site")
-                .argName("Base Site")
-                .desc("The booru to download the pictures from. If unspecified danbooru will be used.")
-                .optionalArg(true)
-                .hasArg()
-                .build();
-
-        Option pageStart = Option.builder("p")
-                .longOpt("page-start")
-                .argName("Page start")
-                .desc("The page in which the downloading starts. If unspecified 1 will be used.")
-                .required(false)
-                .hasArg()
-                .build();
-
-        Option numberOfPages = Option.builder("n")
-                .longOpt("page-number")
-                .argName("Number of pages")
-                .desc("The amount of pages to be downloaded")
-                .hasArg()
-                .required()
-                .build();
-
-        Option desiredTags = Option.builder("d")
-                .longOpt("desired")
-                .argName("Desired Categories")
-                .desc("The desired categories, they are space separated.")
-                .required()
-                .hasArgs()
-                .build();
-
-        Option forbiddenTags = Option.builder("f")
-                .longOpt("forbidden")
-                .argName("Forbidden tags")
-                .required(false)
-                .desc("The tags that will be filtered out")
-                .hasArgs()
-                .build();
-
-        Option sfw = Option.builder()
-                .longOpt("sfw")
-                .argName("Safe for work")
-                .required(false)
-                .hasArg(false)
-                .desc("Block out all non-SWF material")
-                .build();
-
-        Option noComic = Option.builder()
-                .longOpt("no-comic")
-                .argName("No comics")
-                .required(false)
-                .hasArg(false)
-                .desc("Block out all comic/manga images.")
-                .build();
-
-        Option directory = Option.builder("t")
-                .longOpt("target")
-                .argName("Target directory")
-                .required()
-                .desc("The location where the pictures will be saved.")
-                .hasArg()
-                .build();
-
-        Option help = Option.builder("h")
-                .longOpt("help")
-                .desc("This message.")
-                .required(false)
-                .build();
-
-        Option version = Option.builder("v")
-                .longOpt("version")
-                .desc("Version number.")
-                .required(false)
-                .build();
-
-        Options cliOptions = new Options();
-
-        cliOptions.addOption(site);
-        cliOptions.addOption(pageStart);
-        cliOptions.addOption(numberOfPages);
-        cliOptions.addOption(desiredTags);
-        cliOptions.addOption(forbiddenTags);
-        cliOptions.addOption(sfw);
-        cliOptions.addOption(directory);
-        cliOptions.addOption(help);
-        cliOptions.addOption(version);
-        cliOptions.addOption(noComic);
-
-        return cliOptions;
     }
 
 }
