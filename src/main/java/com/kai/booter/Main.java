@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] args) {
 
         String programName = "Danbooru downloader";
-        String versionNumber = "1.1";
+        String versionNumber = "1.2";
 
         Options cliOptions = CLIOptionCreator.getOptions();
         CommandLineParser parser = new DefaultParser();
