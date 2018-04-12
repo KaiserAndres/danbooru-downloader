@@ -79,6 +79,26 @@ class CLIOptionCreator {
 
         cliOptions.addOption(noComic);
 
+        Option minResolution = Option.builder()
+                .longOpt("min-res")
+                .argName("Minimum resolution")
+                .required(false)
+                .hasArgs()
+                .desc("The minimum resolution wanted for a post to be downloaded.")
+                .build();
+
+        cliOptions.addOption(minResolution);
+
+        Option maxResolution = Option.builder()
+                .longOpt("max-res")
+                .argName("Maximum resolution")
+                .required(false)
+                .hasArgs()
+                .desc("The maximum resolution wanted for a post to be downloaded.")
+                .build();
+
+        cliOptions.addOption(maxResolution);
+
         Option directory = Option.builder("t")
                 .longOpt("target")
                 .argName("Target directory")

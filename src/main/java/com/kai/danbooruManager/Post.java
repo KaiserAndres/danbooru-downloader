@@ -81,4 +81,12 @@ public class Post {
     public String[] getTags() {
         return tags;
     }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
 }

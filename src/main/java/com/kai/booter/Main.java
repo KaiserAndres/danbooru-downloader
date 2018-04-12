@@ -113,6 +113,22 @@ public class Main {
             userCfg.addForbiddenCategory("comic");
         }
 
+        if (commandLine.hasOption("min-res")) {
+            String[] min_res = commandLine.getOptionValues("min-res");
+            if (min_res.length == 2) {
+                userCfg.setMin_res(userCfg.WIDTH, Integer.parseInt(min_res[0]));
+                userCfg.setMin_res(userCfg.HEIGHT, Integer.parseInt(min_res[1]));
+            }
+        }
+
+        if (commandLine.hasOption("max-res")) {
+            String[] max_res = commandLine.getOptionValues("max-res");
+            if (max_res.length == 2) {
+                userCfg.setMin_res(userCfg.WIDTH, Integer.parseInt(max_res[0]));
+                userCfg.setMin_res(userCfg.HEIGHT, Integer.parseInt(max_res[1]));
+            }
+        }
+
         userCfg.setImageTarget(commandLine.getOptionValue('t'));
 
         return userCfg;
