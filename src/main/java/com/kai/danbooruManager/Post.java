@@ -6,10 +6,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.logging.Logger;
+
 import static java.lang.Integer.parseInt;
 
 public class Post {
 
+    private Logger postLogger;
     private int id;
     private String[] tags;
     private String fileExtention;
@@ -21,6 +24,8 @@ public class Post {
 
 
     public Post(Element element, String baseUrl) throws MalformedURLException{
+        postLogger = Logger.getLogger(baseUrl);
+
         Map<String, String> elementData = element.dataset();
         id = parseInt(elementData.get("id"));
         width = parseInt(elementData.get("width"));
@@ -40,6 +45,8 @@ public class Post {
             source = null;
             fileUrl = null;
             largeFileUrl = null;
+            postLogger.severe("Unable to identify URL: " + elementData.get("file-url") +
+                    " | " + elementData.get("large-file-url"));
             throw e;
         }
         tags = elementData.get("tags").split(" ");
