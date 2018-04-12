@@ -13,25 +13,25 @@ public class DownloadManager {
 
     public DownloadManager(Configuration cfg) {
         this.cfg = cfg;
-        postQueue = new ArrayDeque<Post>();
+        postQueue = new ArrayDeque<>();
     }
 
     public void addPosts(ArrayList<Post> posts) {
-        postQueue.addAll(posts);
+        posts.stream()
+                .filter(p -> cfg.validate(p))
+                .forEach(post -> postQueue.add(post));
     }
 
     public void download() {
         Post postToDownload = postQueue.pop();
-        if (cfg.validate(postToDownload)) {
-            String fileName = cfg.getImageTarget() + postToDownload.getId() + "." + postToDownload.getFileExtention();
-            File savedImage = new File(fileName);
-            if (!savedImage.exists()) {
-                try {
-                    FileUtils.copyURLToFile(postToDownload.getFileUrl(), savedImage);
-                } catch (IOException e) {
-                    System.out.println(e.toString());
-                    postQueue.add(postToDownload);
-                }
+        String fileName = cfg.getImageTarget() + postToDownload.getId() + "." + postToDownload.getFileExtention();
+        File savedImage = new File(fileName);
+        if (!savedImage.exists()) {
+            try {
+                FileUtils.copyURLToFile(postToDownload.getFileUrl(), savedImage);
+            } catch (IOException e) {
+                System.out.println(e.toString());
+                postQueue.add(postToDownload);
             }
         }
     }
