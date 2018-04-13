@@ -30,8 +30,15 @@ public class Post {
         id = parseInt(elementData.get("id"));
         width = parseInt(elementData.get("width"));
         height = parseInt(elementData.get("height"));
+
         try {
             source = new URL(elementData.get("source"));
+        } catch (MalformedURLException e) {
+            source = null;
+            postLogger.info("Unable to get source");
+        }
+
+        try {
             if (elementData.get("file-url").contains("http"))
                     fileUrl = new URL(elementData.get("file-url"));
             else
@@ -42,13 +49,13 @@ public class Post {
             else
                 largeFileUrl = new URL(baseUrl + elementData.get("large-file-url"));
         } catch (MalformedURLException e) {
-            source = null;
             fileUrl = null;
             largeFileUrl = null;
-            postLogger.severe("Unable to identify URL: " + elementData.get("file-url") +
+            postLogger.severe("Unable to identify URL: " + elementData.get("source") + " | " + elementData.get("file-url") +
                     " | " + elementData.get("large-file-url"));
             throw e;
         }
+
         tags = elementData.get("tags").split(" ");
         fileExtention = elementData.get("file-ext");
     }
