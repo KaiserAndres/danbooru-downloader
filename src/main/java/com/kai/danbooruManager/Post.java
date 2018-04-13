@@ -77,6 +77,10 @@ public class Post {
         return fileUrl;
     }
 
+    public URL getLargeFileUrl() {
+        return largeFileUrl;
+    }
+
     public int getId() {
         return id;
     }
