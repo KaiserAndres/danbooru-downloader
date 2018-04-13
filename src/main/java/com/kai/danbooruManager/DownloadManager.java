@@ -6,7 +6,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-import org.apache.commons.io.FileUtils;
+import com.kai.webIO.DataGrabber;
 
 public class DownloadManager {
 
@@ -31,21 +31,25 @@ public class DownloadManager {
         Post postToDownload = postQueue.pop();
         String fileName = cfg.getImageTarget() + postToDownload.getId() + "." + postToDownload.getFileExtention();
         File savedImage = new File(fileName);
+        DataGrabber dg = new DataGrabber(postToDownload.getFileUrl(),
+                "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0");
         if (!savedImage.exists()) {
             try {
-                FileUtils.copyURLToFile(postToDownload.getFileUrl(), savedImage);
+                dg.connect();
+                dg.download(savedImage);
+                dg.disconnect();
             } catch (IOException e) {
                 downloaderLogger.info("Could not download image, trying to recover");
-                try {recoverAndDownloadLarger(postToDownload, savedImage);}
-                catch (IOException ne) {
-                    downloaderLogger.severe("Could not get image: " + ne.getMessage());
+                dg.setOrigin(postToDownload.getLargeFileUrl());
+                try {
+                    dg.connect();
+                    dg.download(savedImage);
+                    dg.disconnect();
+                } catch (IOException ee) {
+                    System.out.println("Welp, idk what to do now");
                 }
             }
         }
-    }
-
-    private void recoverAndDownloadLarger(Post post, File target) throws IOException {
-        FileUtils.copyURLToFile(post.getLargeFileUrl(), target);
     }
 
     public int getPostCount() { return  postQueue.size(); }
