@@ -16,6 +16,13 @@ public class Main {
         String versionNumber = "1.2";
 
         Options cliOptions = CLIOptionCreator.getPageOptions();
+        String mode = "default";
+
+        if (args.length > 1) {
+            cliOptions = CLIOptionCreator.getAppropiateOption(args[0]);
+            mode = "picture";
+        }
+
         CommandLineParser parser = new DefaultParser();
         CommandLine commandLine;
         try {
@@ -36,14 +43,18 @@ public class Main {
 
         Configuration userCfg = createConfiguration(commandLine);
         Url workerUrl = createWorkerUrl(commandLine, userCfg);
-        int pageCount = Integer.parseInt(commandLine.getOptionValue('n'));
+        int desiredAmmount = Integer.parseInt(commandLine.getOptionValue('n'));
 
         DownloadManager dm = new DownloadManager(userCfg);
-        downloadPictures(workerUrl, pageCount, dm);
+
+        if (mode.equals("picture"))
+            downloadPictures(workerUrl, desiredAmmount, dm);
+
+        downloadPicturesPerPage(workerUrl, desiredAmmount, dm);
 
     }
 
-    private static void downloadPictures(Url workerUrl, int pageAmount, DownloadManager downloadManager) {
+    private static void downloadPicturesPerPage(Url workerUrl, int pageAmount, DownloadManager downloadManager) {
 
         for (int p = 0; p< pageAmount; p++) {
             System.out.println("Downloading page Nº" + workerUrl.getPageNumber());
@@ -57,6 +68,27 @@ public class Main {
             while (downloadManager.hasElements()) {
                 downloadManager.download();
                 System.out.println(downloaded + "/" + totalPosts);
+                downloaded++;
+            }
+
+            workerUrl.incrementPageNumber();
+        }
+
+    }
+
+    private static void downloadPictures(Url workerUrl, int pictureAmount, DownloadManager downloadManager) {
+
+        int downloaded = 0;
+        while (downloaded < pictureAmount) {
+
+            DanbooruPage page = new DanbooruPage(workerUrl);
+            page.processPage();
+
+            downloadManager.addPosts(page.getPosts());
+
+            while (downloadManager.hasElements() && downloaded < pictureAmount) {
+                downloadManager.download();
+                System.out.println("Downloading picture "+downloaded + "/" + pictureAmount);
                 downloaded++;
             }
 

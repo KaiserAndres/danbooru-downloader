@@ -133,4 +133,12 @@ class CLIOptionCreator {
         return cliOptions;
     }
 
+    static Options getAppropiateOption(String name) {
+        switch (name) {
+            case "picture": return getPictureOptions();
+            case "page": return getPageOptions();
+            default: return getPageOptions();
+        }
+    }
+
 }
