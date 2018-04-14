@@ -20,7 +20,7 @@ public class DanbooruPage {
 
     public DanbooruPage(Url pageUrl) {
         pageLogger = Logger.getLogger(pageUrl.toString());
-        posts = new ArrayList<Post>();
+        posts = new ArrayList<>();
         this.url = pageUrl;
         this.doc = null;
     }
@@ -35,15 +35,12 @@ public class DanbooruPage {
     }
 
     private void populatePosts() {
-        Element body = doc.body();
-        Elements detectedArticles = body.getElementsByTag("article");
-        for (Element article : detectedArticles) {
+        for (Element article : doc.body().getElementsByTag("article"))
             try {
                 posts.add(new Post(article, url.getBaseUrl()));
             } catch (MalformedURLException e) {
                 pageLogger.info("Unable to download image: " + e.toString() + " skipping post.");
             }
-        }
     }
 
     public void processPage() {
