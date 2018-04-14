@@ -73,11 +73,11 @@ public class Post {
                 '}';
     }
 
-    public URL getFileUrl() {
+    URL getFileUrl() {
         return fileUrl;
     }
 
-    public URL getLargeFileUrl() {
+    URL getLargeFileUrl() {
         return largeFileUrl;
     }
 
@@ -85,19 +85,19 @@ public class Post {
         return id;
     }
 
-    public String getFileExtention() {
+    String getFileExtention() {
         return fileExtention;
     }
 
-    public String[] getTags() {
+    String[] getTags() {
         return tags;
     }
 
-    public int getWidth() {
+    int getWidth() {
         return width;
     }
 
-    public int getHeight() {
+    int getHeight() {
         return height;
     }
 }

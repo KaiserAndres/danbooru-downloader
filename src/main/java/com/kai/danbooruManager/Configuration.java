@@ -16,36 +16,22 @@ public class Configuration {
     public final int HEIGHT = 1;
 
     public Configuration() {
-        desiredCategories = new ArrayList<String>();
-        forbiddenCategories = new ArrayList<String>();
+        desiredCategories = new ArrayList<>();
+        forbiddenCategories = new ArrayList<>();
         imageTarget = "./";
         this.min_res = new Vector<>();
         this.max_res = new Vector<>();
-    }
-
-    public Configuration(ArrayList<String> desiredCategories, ArrayList<String> forbiddenCategories) {
-        this.desiredCategories = desiredCategories;
-        this.forbiddenCategories = forbiddenCategories;
-        imageTarget = "./";
-    }
-
-    public Vector<Integer> getMin_res() {
-        return min_res;
     }
 
     public void setMin_res(int pos, int value) {
         this.min_res.add(pos, value);
     }
 
-    public Vector<Integer> getMax_res() {
-        return max_res;
-    }
-
     public void setMax_res(int pos, int value) {
         this.max_res.add(pos, value);
     }
 
-    public String getImageTarget() {
+    String getImageTarget() {
         return imageTarget;
     }
 
@@ -77,19 +63,15 @@ public class Configuration {
         }
     }
 
-    public ArrayList<String> getDesiredCategories() {
+    ArrayList<String> getDesiredCategories() {
         return desiredCategories;
     }
 
-    public ArrayList<String> getForbiddenCategories() {
-        return forbiddenCategories;
-    }
-
-    public boolean isEmpty() {
+    boolean isEmpty() {
         return desiredCategories.isEmpty();
     }
 
-    public boolean validate(Post p) {
+    boolean validate(Post p) {
         boolean res = true;
         for (String category : p.getTags())
             res = res && !forbiddenCategories.contains(category);
