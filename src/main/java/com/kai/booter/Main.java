@@ -49,8 +49,8 @@ public class Main {
 
         if (mode.equals("picture"))
             downloadPictures(workerUrl, desiredAmmount, dm);
-
-        downloadPicturesPerPage(workerUrl, desiredAmmount, dm);
+        else
+            downloadPicturesPerPage(workerUrl, desiredAmmount, dm);
 
     }
 
