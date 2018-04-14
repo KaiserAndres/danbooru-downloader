@@ -10,8 +10,6 @@ public class DataGrabber {
     private String userAgent;
     private InputStream reader;
 
-    private final int BUFF_SIZE = 1024;
-
     public DataGrabber(URL origin, String userAgent) {
         this.origin = origin;
         this.userAgent = userAgent;
@@ -46,11 +44,12 @@ public class DataGrabber {
         if (reader == null)
             return;
         FileOutputStream destinationStream = new FileOutputStream(destination);
-        byte buff[] = new byte[BUFF_SIZE];
-        int s = reader.read(buff);
-        while(s != -1) {
-            destinationStream.write(buff, 0, s);
-            s = reader.read(buff);
+        final int buffSize = 1024;
+        byte buff[] = new byte[buffSize];
+        int bytesRead = reader.read(buff);
+        while(bytesRead != -1) {
+            destinationStream.write(buff, 0, bytesRead);
+            bytesRead = reader.read(buff);
         }
 
         destinationStream.close();
