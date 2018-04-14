@@ -156,8 +156,8 @@ public class Main {
         if (commandLine.hasOption("max-res")) {
             String[] max_res = commandLine.getOptionValues("max-res");
             if (max_res.length == 2) {
-                userCfg.setMin_res(userCfg.WIDTH, Integer.parseInt(max_res[0]));
-                userCfg.setMin_res(userCfg.HEIGHT, Integer.parseInt(max_res[1]));
+                userCfg.setMax_res(userCfg.WIDTH, Integer.parseInt(max_res[0]));
+                userCfg.setMax_res(userCfg.HEIGHT, Integer.parseInt(max_res[1]));
             }
         }
 
