@@ -15,7 +15,7 @@ public class Main {
         String programName = "Danbooru downloader";
         String versionNumber = "1.2";
 
-        Options cliOptions = CLIOptionCreator.getOptions();
+        Options cliOptions = CLIOptionCreator.getPageOptions();
         CommandLineParser parser = new DefaultParser();
         CommandLine commandLine;
         try {

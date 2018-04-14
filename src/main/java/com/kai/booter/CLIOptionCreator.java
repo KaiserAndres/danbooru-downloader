@@ -5,19 +5,90 @@ import org.apache.commons.cli.Options;
 
 class CLIOptionCreator {
 
-    static Options getOptions() {
+    private static final Option[] defaultOptions = {
+            Option.builder("b")
+                    .longOpt("base-site")
+                    .argName("Base Site")
+                    .desc("The booru to download the pictures from. If unspecified danbooru will be used.")
+                    .optionalArg(true)
+                    .hasArg()
+                    .build(),
+
+            Option.builder("d")
+                    .longOpt("desired")
+                    .argName("Desired Categories")
+                    .desc("The desired categories, they are space separated.")
+                    .required()
+                    .hasArgs()
+                    .build(),
+
+            Option.builder("f")
+                    .longOpt("forbidden")
+                    .argName("Forbidden tags")
+                    .required(false)
+                    .desc("The tags that will be filtered out")
+                    .hasArgs()
+                    .build(),
+
+            Option.builder()
+                    .longOpt("sfw")
+                    .argName("Safe for work")
+                    .required(false)
+                    .hasArg(false)
+                    .desc("Block out all non-SWF material")
+                    .build(),
+
+            Option.builder()
+                    .longOpt("no-comic")
+                    .argName("No comics")
+                    .required(false)
+                    .hasArg(false)
+                    .desc("Block out all comic/manga images.")
+                    .build(),
+
+            Option.builder()
+                    .longOpt("min-res")
+                    .argName("Minimum resolution")
+                    .required(false)
+                    .hasArgs()
+                    .desc("The minimum resolution wanted for a post to be downloaded.")
+                    .build(),
+
+            Option.builder()
+                    .longOpt("max-res")
+                    .argName("Maximum resolution")
+                    .required(false)
+                    .hasArgs()
+                    .desc("The maximum resolution wanted for a post to be downloaded.")
+                    .build(),
+
+            Option.builder("t")
+                    .longOpt("target")
+                    .argName("Target directory")
+                    .required()
+                    .desc("The location where the pictures will be saved.")
+                    .hasArg()
+                    .build(),
+
+            Option.builder("h")
+                    .longOpt("help")
+                    .desc("This message.")
+                    .required(false)
+                    .build(),
+
+            Option.builder("v")
+                    .longOpt("version")
+                    .desc("Version number.")
+                    .required(false)
+                    .build()
+    };
+
+    static Options getPageOptions() {
 
         Options cliOptions = new Options();
 
-        Option site = Option.builder("b")
-                .longOpt("base-site")
-                .argName("Base Site")
-                .desc("The booru to download the pictures from. If unspecified danbooru will be used.")
-                .optionalArg(true)
-                .hasArg()
-                .build();
-
-        cliOptions.addOption(site);
+        for (Option option : defaultOptions )
+            cliOptions.addOption(option);
 
         Option pageStart = Option.builder("p")
                 .longOpt("page-start")
@@ -39,91 +110,25 @@ class CLIOptionCreator {
 
         cliOptions.addOption(numberOfPages);
 
-        Option desiredTags = Option.builder("d")
-                .longOpt("desired")
-                .argName("Desired Categories")
-                .desc("The desired categories, they are space separated.")
-                .required()
-                .hasArgs()
-                .build();
+        return cliOptions;
+    }
 
-        cliOptions.addOption(desiredTags);
+    static Options getPictureOptions() {
 
-        Option forbiddenTags = Option.builder("f")
-                .longOpt("forbidden")
-                .argName("Forbidden tags")
-                .required(false)
-                .desc("The tags that will be filtered out")
-                .hasArgs()
-                .build();
+        Options cliOptions = new Options();
 
-        cliOptions.addOption(forbiddenTags);
+        for (Option option : defaultOptions )
+            cliOptions.addOption(option);
 
-        Option sfw = Option.builder()
-                .longOpt("sfw")
-                .argName("Safe for work")
-                .required(false)
-                .hasArg(false)
-                .desc("Block out all non-SWF material")
-                .build();
-
-        cliOptions.addOption(sfw);
-
-        Option noComic = Option.builder()
-                .longOpt("no-comic")
-                .argName("No comics")
-                .required(false)
-                .hasArg(false)
-                .desc("Block out all comic/manga images.")
-                .build();
-
-        cliOptions.addOption(noComic);
-
-        Option minResolution = Option.builder()
-                .longOpt("min-res")
-                .argName("Minimum resolution")
-                .required(false)
-                .hasArgs()
-                .desc("The minimum resolution wanted for a post to be downloaded.")
-                .build();
-
-        cliOptions.addOption(minResolution);
-
-        Option maxResolution = Option.builder()
-                .longOpt("max-res")
-                .argName("Maximum resolution")
-                .required(false)
-                .hasArgs()
-                .desc("The maximum resolution wanted for a post to be downloaded.")
-                .build();
-
-        cliOptions.addOption(maxResolution);
-
-        Option directory = Option.builder("t")
-                .longOpt("target")
-                .argName("Target directory")
-                .required()
-                .desc("The location where the pictures will be saved.")
+        Option numberOfPictures = Option.builder("n")
+                .longOpt("picture-number")
+                .argName("Number of pictures")
+                .desc("The ammount of pictures to download")
                 .hasArg()
+                .required()
                 .build();
 
-        cliOptions.addOption(directory);
-
-        Option help = Option.builder("h")
-                .longOpt("help")
-                .desc("This message.")
-                .required(false)
-                .build();
-
-        cliOptions.addOption(help);
-
-        Option version = Option.builder("v")
-                .longOpt("version")
-                .desc("Version number.")
-                .required(false)
-                .build();
-
-        cliOptions.addOption(version);
+        cliOptions.addOption(numberOfPictures);
 
         return cliOptions;
     }
