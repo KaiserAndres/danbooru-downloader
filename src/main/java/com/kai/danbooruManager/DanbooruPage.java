@@ -25,11 +25,12 @@ public class DanbooruPage {
         this.doc = null;
     }
 
-    private void downloadPage() {
+    private void downloadPage() throws IOException{
         try {
             doc = Jsoup.connect(url.toString()).get();
         } catch (IOException e) {
             pageLogger.severe("Unable to downloadPage page: " + url.toString());
+            throw e;
         }
     }
 
@@ -46,7 +47,12 @@ public class DanbooruPage {
     }
 
     public void processPage() {
-        downloadPage();
+        try {
+            downloadPage();
+        } catch (IOException e) {
+            // Page was not downloaded, skipping
+            return;
+        }
         populatePosts();
     }
 
