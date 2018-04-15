@@ -100,7 +100,7 @@ public class Main {
     private static void displayHelp(Options cliOptions) {
         String header = "I'll it load the GUI, seriously I'll do it some day. :(";
         HelpFormatter hp = new HelpFormatter();
-        hp.printHelp("Danbooru-downloader", header, cliOptions, "", true);
+        hp.printHelp("java -jar danbooru-downloader.jar [default | image]", header, cliOptions, "", true);
     }
 
     private static Url createWorkerUrl(CommandLine commandLine, Configuration userCfg) {
