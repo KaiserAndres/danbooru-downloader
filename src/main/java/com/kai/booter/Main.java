@@ -17,8 +17,9 @@ public class Main {
         String programName = "Danbooru downloader";
         String versionNumber = "1.2";
 
-        Options cliOptions = CLIOptionCreator.getPageOptions();
         String mode = "default";
+        Options cliOptions = CLIOptionCreator.cliOptionsFactory(mode);
+
 
         if (args.length > 1) {
             cliOptions = CLIOptionCreator.cliOptionsFactory(args[0]);
@@ -48,14 +49,14 @@ public class Main {
 
         Configuration userCfg = createConfiguration(commandLine);
         Url workerUrl = createWorkerUrl(commandLine, userCfg);
-        int desiredAmmount = Integer.parseInt(commandLine.getOptionValue('n'));
+        int desiredAmount = Integer.parseInt(commandLine.getOptionValue('n'));
 
         DownloadManager dm = new DownloadManager(userCfg);
 
         if (mode.equals("picture"))
-            downloadPictures(workerUrl, desiredAmmount, dm);
+            downloadPictures(workerUrl, desiredAmount, dm);
         else
-            downloadPicturesPerPage(workerUrl, desiredAmmount, dm);
+            downloadPicturesPerPage(workerUrl, desiredAmount, dm);
 
     }
 
