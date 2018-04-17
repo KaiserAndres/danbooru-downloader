@@ -7,6 +7,7 @@ import org.jsoup.nodes.Element;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -27,6 +28,8 @@ public class DanbooruPage {
     private void downloadPage() throws IOException{
         try {
             doc = Jsoup.connect(url.toString()).get();
+        } catch (SocketTimeoutException e) {
+            downloadPage();
         } catch (IOException e) {
             pageLogger.severe("Unable to downloadPage page: " + url.toString());
             throw e;
