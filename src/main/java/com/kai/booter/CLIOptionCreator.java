@@ -89,7 +89,7 @@ class CLIOptionCreator {
                     .build()
     };
 
-    static Options getPageOptions() {
+    private static Options getPageOptions() {
 
         Options cliOptions = new Options();
 
@@ -119,7 +119,7 @@ class CLIOptionCreator {
         return cliOptions;
     }
 
-    static Options getPictureOptions() {
+    private static Options getPictureOptions() {
 
         Options cliOptions = new Options();
 
@@ -139,7 +139,7 @@ class CLIOptionCreator {
         return cliOptions;
     }
 
-    static Options getAppropiateOption(String name) {
+    static Options cliOptionsFactory(String name) {
         switch (name) {
             case "picture": return getPictureOptions();
             case "page": return getPageOptions();

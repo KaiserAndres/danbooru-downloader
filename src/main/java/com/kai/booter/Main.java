@@ -21,7 +21,7 @@ public class Main {
         String mode = "default";
 
         if (args.length > 1) {
-            cliOptions = CLIOptionCreator.getAppropiateOption(args[0]);
+            cliOptions = CLIOptionCreator.cliOptionsFactory(args[0]);
             mode = "picture";
         }
 
