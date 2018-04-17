@@ -70,6 +70,12 @@ class CLIOptionCreator {
                     .hasArg()
                     .build(),
 
+            Option.builder("s")
+                    .longOpt("silent")
+                    .desc("Don't output anything to the terminal.")
+                    .required(false)
+                    .build(),
+
             Option.builder("h")
                     .longOpt("help")
                     .desc("This message.")

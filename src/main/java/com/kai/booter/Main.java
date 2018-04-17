@@ -10,6 +10,8 @@ import java.util.Arrays;
 
 public class Main {
 
+    private static boolean silent = false;
+
     public static void main(String[] args) {
 
         String programName = "Danbooru downloader";
@@ -41,6 +43,9 @@ public class Main {
             return;
         }
 
+        if (commandLine.hasOption("s"))
+            silent = true;
+
         Configuration userCfg = createConfiguration(commandLine);
         Url workerUrl = createWorkerUrl(commandLine, userCfg);
         int desiredAmmount = Integer.parseInt(commandLine.getOptionValue('n'));
@@ -57,7 +62,8 @@ public class Main {
     private static void downloadPicturesPerPage(Url workerUrl, int pageAmount, DownloadManager downloadManager) {
 
         for (int p = 0; p< pageAmount; p++) {
-            System.out.println("Downloading page Nº" + workerUrl.getPageNumber());
+            if (!silent)
+                System.out.println("Downloading page Nº" + workerUrl.getPageNumber());
             DanbooruPage page = new DanbooruPage(workerUrl);
             page.processPage();
 
@@ -67,7 +73,8 @@ public class Main {
 
             while (downloadManager.hasElements()) {
                 downloadManager.download();
-                System.out.println(downloaded + "/" + totalPosts);
+                if (!silent)
+                    System.out.println(downloaded + "/" + totalPosts);
                 downloaded++;
             }
 
@@ -88,7 +95,8 @@ public class Main {
 
             while (downloadManager.hasElements() && downloaded < pictureAmount) {
                 downloadManager.download();
-                System.out.println("Downloading picture "+downloaded + "/" + pictureAmount);
+                if (!silent)
+                    System.out.println("Downloading picture "+downloaded + "/" + pictureAmount);
                 downloaded++;
             }
 
